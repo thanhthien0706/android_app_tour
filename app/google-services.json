@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "594518467925",
+    "project_id": "app-order-tour-dacs3",
+    "storage_bucket": "app-order-tour-dacs3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594518467925:android:8511836beb03b1c476fbdc",
+        "android_client_info": {
+          "package_name": "com.example.appordertour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594518467925-3k5edccvv4ta5ml458qogsbeffhgm1b4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBncS3OI3v3IoV99iCIRFMr_FvyP3-RSkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594518467925-3k5edccvv4ta5ml458qogsbeffhgm1b4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

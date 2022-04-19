@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LoginTextInputLayout_overlay">
+        <item name="colorOnSurface">@color/gray_mind_70</item>
+        <item name="colorPrimary">@color/gray_mind_70</item>
+    </style>
+
+    <!--    <style name="FilledBoxEndIconTint" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+    <!--        <item name="endIconTint">@color/main_button</item>-->
+    <!--    </style>-->
+
+    <style name="FacebookLoginButton">
+        <item name="android:background">@drawable/ic_facebook</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="loginCard"></style>
+
+    <style name="loginButton">
+        <item name="android:background">@drawable/login_button_bk</item>
+        <item name="android:textColor">@color/gray_mind_30</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
