@@ -1,5 +1,6 @@
 package com.example.appordertour.view.auth
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -7,10 +8,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appordertour.databinding.ActivityRegisterBinding
 import com.example.appordertour.service.Firebase
+import com.google.android.material.textfield.TextInputEditText
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var firebase: Firebase
+    private lateinit var userName: TextInputEditText
+    private lateinit var email: TextInputEditText
+    private lateinit var pass: TextInputEditText
+    private lateinit var comfirm_pass: TextInputEditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +32,22 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun onEvents() {
-        binding.btnRegister.setOnClickListener {
-            val userName = binding.txtUserNameRegister.text.toString()
-            val email = binding.txtEmailRegister.text.toString()
-            val pass = binding.txtPassLoginRegister.text.toString()
+        binding.tvSelectLogin.setOnClickListener {
+            startActivity(
+                Intent(
+                    applicationContext,
+                    LoginActivity::class.java
+                )
+            )
+        }
 
-            firebase.createNewAccount(email, pass, userName) { status ->
+        binding.btnRegister.setOnClickListener {
+
+            firebase.createNewAccount(
+                email.text?.trim().toString(),
+                pass.text?.trim().toString(),
+                userName.text?.trim().toString()
+            ) { status ->
                 if (status == true) {
                     Toast.makeText(this, "register thanh cong", Toast.LENGTH_LONG).show()
                 } else {
@@ -43,5 +59,9 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun onControls() {
         firebase = Firebase()
+        userName = binding.txtUserNameRegister
+        email = binding.txtEmailRegister
+        pass = binding.txtPassLoginRegister
+        comfirm_pass = binding.txtPassLoginReRegister
     }
 }

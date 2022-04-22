@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">App Order Tour</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -15,4 +16,12 @@
     <string name="login_input_pass">Nhập lại mật khẩu</string>
     <string name="login_button">Đi thôi!</string>
     <string name="login_register">Bạn chưa có tài khoản?</string>
+
+    <!--   Menu main bottom -->
+    <string name="home_menu">Trang chủ</string>
+    <string name="chat_menu">Tin nhắn</string>
+    <string name="preferential_menu">Ưu đãi</string>
+    <string name="order_menu">Đơn hàng</string>
+    <string name="account_menu">Tài khoản</string>
+
 </resources>

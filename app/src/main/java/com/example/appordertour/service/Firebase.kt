@@ -53,14 +53,29 @@ class Firebase {
     //    [Create new  user in firestore]
     fun createNewUser(name_user: String, callback: (status: Boolean) -> Unit) {
 
-        if (email_user != null && password_user != null) {
-            val user = User(userName = name_user, mail = email_user)
+        val idUser = auth.currentUser?.uid
 
-            db.collection("users").add(user).addOnSuccessListener {
-                callback.invoke(true)
-            }.addOnFailureListener {
-                callback.invoke(false)
+        if (email_user != null && password_user != null) {
+            val user = User(id = idUser, userName = name_user, mail = email_user)
+
+            if (idUser != null) {
+                db.collection("users").document(idUser).set(user).addOnSuccessListener {
+                    callback.invoke(true)
+                }.addOnFailureListener {
+                    callback.invoke(false)
+                }
             }
+        }
+    }
+
+    //    [ SIGNIN  ]
+    fun signIn(email: String, password: String, callback: (status: Boolean) -> Unit) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                callback.invoke(true)
+            }
+        }.addOnFailureListener {
+            callback.invoke(false)
         }
     }
 

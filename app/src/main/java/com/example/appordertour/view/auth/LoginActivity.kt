@@ -5,13 +5,20 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appordertour.databinding.ActivityLoginBinding
+import com.example.appordertour.service.Firebase
+import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var tv_select_register: TextView
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var firebase: Firebase
+
+    private lateinit var tv_select_register: TextView
+    private lateinit var txt_email_login: TextInputEditText
+    private lateinit var txt_pass_login: TextInputEditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +42,27 @@ class LoginActivity : AppCompatActivity() {
                 )
             )
         }
+
+        binding.btnLogin.setOnClickListener {
+            val valEmail = txt_email_login.text?.trim().toString()
+            val valPass = txt_pass_login.text?.trim().toString()
+
+            firebase.signIn(valEmail, valPass) { status ->
+                if (status) {
+//
+                } else {
+                    Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+
+
     }
 
     private fun onControls() {
+        firebase = Firebase()
+        txt_email_login = binding.txtEmailLogin
+        txt_pass_login = binding.txtPassLogin
     }
 }
