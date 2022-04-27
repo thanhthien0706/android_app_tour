@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appordertour.databinding.ActivityLoginBinding
 import com.example.appordertour.service.Firebase
+import com.example.appordertour.view.MainActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
@@ -41,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
                     RegisterActivity::class.java
                 )
             )
+            finish()
         }
 
         binding.btnLogin.setOnClickListener {
@@ -49,7 +51,10 @@ class LoginActivity : AppCompatActivity() {
 
             firebase.signIn(valEmail, valPass) { status ->
                 if (status) {
-//
+                    startActivity(
+                        Intent(applicationContext, MainActivity::class.java)
+                    )
+                    finish()
                 } else {
                     Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_LONG).show()
                 }

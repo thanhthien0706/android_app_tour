@@ -39,6 +39,7 @@ class RegisterActivity : AppCompatActivity() {
                     LoginActivity::class.java
                 )
             )
+            finish()
         }
 
         binding.btnRegister.setOnClickListener {

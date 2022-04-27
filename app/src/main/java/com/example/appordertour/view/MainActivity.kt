@@ -1,5 +1,6 @@
 package com.example.appordertour.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -8,14 +9,18 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.appordertour.R
 import com.example.appordertour.databinding.ActivityMainBinding
+import com.example.appordertour.service.Firebase
 import com.example.appordertour.view.adapter.ViewPagerNavMainAdapter
+import com.example.appordertour.view.auth.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var vpgMain: ViewPager
-    private lateinit var navViewMain: BottomNavigationView
+
+    private lateinit var mNavigation: BottomNavigationView
+    private lateinit var mViewPager: ViewPager
+    private lateinit var mFirebase: Firebase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,68 +38,69 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addEvents() {
-        onEventHandleNavigation()
-
-    }
-
-    private fun onEventHandleNavigation() {
-        navViewMain.setOnNavigationItemSelectedListener { item ->
+        mNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.home_nav_bt -> {
-                    vpgMain.setCurrentItem(0)
-                }
-                R.id.chat_nav_bt -> {
-                    vpgMain.setCurrentItem(1)
-                }
-                R.id.sale_nav_bt -> {
-                    vpgMain.setCurrentItem(2)
-                }
-                R.id.order_nav_bt -> {
-                    vpgMain.setCurrentItem(3)
-                }
+                R.id.home_nav_bt -> mViewPager.setCurrentItem(0)
+                R.id.chat_nav_bt -> mViewPager.setCurrentItem(1)
+                R.id.sale_nav_bt -> mViewPager.setCurrentItem(2)
+                R.id.order_nav_bt -> mViewPager.setCurrentItem(3)
                 R.id.account_nav_bt -> {
-                    vpgMain.setCurrentItem(4)
+                    if (mFirebase.checkLogin()) {
+                        mViewPager.setCurrentItem(4)
+                    } else {
+                        startActivity(
+                            Intent(applicationContext, LoginActivity::class.java)
+                        )
+                    }
                 }
+
             }
             true
         }
     }
 
     private fun addControls() {
-        vpgMain = findViewById(R.id.vpg_main)
-        navViewMain = binding.navViewMain
+        mNavigation = findViewById(R.id.nav_view_main)
+        mViewPager = findViewById(R.id.vpg_main)
+        mFirebase = Firebase()
 
-        setUpViewPagerMain()
+        setUpViewPager()
     }
 
-    private fun setUpViewPagerMain() {
-        val vpgNavMainAdapter = ViewPagerNavMainAdapter(
-            supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    private fun setUpViewPager() {
+        val vpgAdapter = ViewPagerNavMainAdapter(
+            supportFragmentManager,
+            FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         )
+        mViewPager.adapter = vpgAdapter
 
-        vpgMain.adapter = vpgNavMainAdapter
-
-        vpgMain?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
+        mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-
             }
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> navViewMain.menu.findItem(R.id.home_nav_bt).setChecked(true)
-                    1 -> navViewMain.menu.findItem(R.id.chat_nav_bt).setChecked(true)
-                    2 -> navViewMain.menu.findItem(R.id.sale_nav_bt).setChecked(true)
-                    3 -> navViewMain.menu.findItem(R.id.order_nav_bt).setChecked(true)
-                    4 -> navViewMain.menu.findItem(R.id.account_nav_bt).setChecked(true)
+                    0 -> mNavigation.menu.findItem(R.id.home_nav_bt).setChecked(true)
+                    1 -> mNavigation.menu.findItem(R.id.chat_nav_bt).setChecked(true)
+                    2 -> mNavigation.menu.findItem(R.id.sale_nav_bt).setChecked(true)
+                    3 -> mNavigation.menu.findItem(R.id.order_nav_bt).setChecked(true)
+                    4 -> {
+                        if (mFirebase.checkLogin()) {
+                            mNavigation.menu.findItem(R.id.account_nav_bt).setChecked(true)
+                        } else {
+                            startActivity(
+                                Intent(applicationContext, LoginActivity::class.java)
+                            )
+                        }
+                    }
                 }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
             }
 
         })

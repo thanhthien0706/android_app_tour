@@ -18,7 +18,6 @@ class Firebase {
     fun checkLogin(): Boolean {
         val currentUser = auth.currentUser
 
-        Log.d("Kiem_tra_user", currentUser.toString())
         if (currentUser == null) {
             return false
         }

@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.appordertour.R
 
-class SaleFragment : Fragment() {
+class SaleFragment : Fragment {
+    constructor()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
         var view: View = inflater.inflate(R.layout.fragment_sale, container, false)
-
         return view
     }
 }
