@@ -23,4 +23,5 @@
         <item name="android:textColor">@color/gray_mind_30</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 </resources>

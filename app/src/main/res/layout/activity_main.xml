@@ -10,7 +10,10 @@
         android:id="@+id/vpg_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/nav_view_main" />
+        android:layout_above="@+id/nav_view_main"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="16dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view_main"

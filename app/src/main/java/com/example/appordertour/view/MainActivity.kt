@@ -5,6 +5,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.appordertour.R
@@ -25,6 +28,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        getWindow().setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        );
+//        hideSystemBars()
+
         window?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
         window.statusBarColor = Color.TRANSPARENT
@@ -36,6 +45,17 @@ class MainActivity : AppCompatActivity() {
         addEvents()
 
     }
+
+    private fun hideSystemBars() {
+        val windowInsetsController =
+            ViewCompat.getWindowInsetsController(window.decorView) ?: return
+        // Configure the behavior of the hidden system bars
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        // Hide both the status bar and the navigation bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+    }
+
 
     private fun addEvents() {
         mNavigation.setOnNavigationItemSelectedListener { item ->
@@ -74,35 +94,5 @@ class MainActivity : AppCompatActivity() {
         )
         mViewPager.adapter = vpgAdapter
 
-        mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    0 -> mNavigation.menu.findItem(R.id.home_nav_bt).setChecked(true)
-                    1 -> mNavigation.menu.findItem(R.id.chat_nav_bt).setChecked(true)
-                    2 -> mNavigation.menu.findItem(R.id.sale_nav_bt).setChecked(true)
-                    3 -> mNavigation.menu.findItem(R.id.order_nav_bt).setChecked(true)
-                    4 -> {
-                        if (mFirebase.checkLogin()) {
-                            mNavigation.menu.findItem(R.id.account_nav_bt).setChecked(true)
-                        } else {
-                            startActivity(
-                                Intent(applicationContext, LoginActivity::class.java)
-                            )
-                        }
-                    }
-                }
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-        })
     }
 }
