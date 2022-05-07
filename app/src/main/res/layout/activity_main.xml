@@ -10,20 +10,26 @@
         android:id="@+id/vpg_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/nav_view_main"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginTop="36dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/custom_navigation"
-        app:itemBackground="@color/white"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_corner"
+        android:elevation="2dp"
+        app:itemIconSize="24dp"
         app:itemIconTint="@color/custom_navigation_man"
+        app:itemRippleColor="@android:color/transparent"
         app:itemTextColor="@color/custom_navigation_man"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_nav_main" />
 
 </RelativeLayout>

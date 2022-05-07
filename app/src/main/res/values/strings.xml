@@ -24,4 +24,12 @@
     <string name="order_menu">Đơn hàng</string>
     <string name="account_menu">Tài khoản</string>
 
+    <!--    page detail tour-->
+    <string name="overview_detail_fragment">Tổng quan</string>
+    <string name="activities_detail_fragment">Hoạt động</string>
+    <string name="images_detail_fragment">Ảnh</string>
+    <string name="review_detail_fragment">Đánh giá</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

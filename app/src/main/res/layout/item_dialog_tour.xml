@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lo_dialog_tour"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_dialog_tour"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/luffy_5"
+            app:riv_corner_radius="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_dialog_name_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:maxLines="1"
+                android:text="TEsskfajsdfasd"
+                android:textColor="@color/gray_mind"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name_tour"
+                android:layout_marginTop="4dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/location" />
+
+                <TextView
+                    android:id="@+id/tv_dialog_location_tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/account_menu" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name_tour"
+                android:layout_marginTop="4dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/age_ic" />
+
+                <TextView
+                    android:id="@+id/tv_dialog_age_tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/account_menu" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_dialog_price_tour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/txt_name_tour"
+                android:text="@string/account_menu"
+                android:textColor="@color/main_button"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/txt_name_tour"
+            android:text="Thời gian"
+            android:textFontWeight="700"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_dialog_time_tour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="fjasidjfiadjsifjasdijfaisdjfiadjsifjasdifjaisdjfadisjfasdjfasdijfiasdjfiadjsfiadjsdsfjajsdfkasd"
+            android:textColor="@color/gray_mind_40"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/txt_name_tour"
+            android:text="Mô tả"
+            android:textFontWeight="700"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_dialog_discription_tour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="fjasidjfiadjsifjasdijfaisdjfiadjsifjasdifjaisdjfadisjfasdjfasdijfiasdjfiadjsfiadjsdsfjajsdfkasd"
+            android:textColor="@color/gray_mind_40"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:text="Mua Tour"
+            app:backgroundTint="@null" />
+
+        <Button xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_custom_1"
+            android:text="Xem chi tiết"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,10 +2,16 @@ package com.example.appordertour.service
 
 import android.util.Log
 import com.example.appordertour.model.User
+import com.example.appordertour.view.navigation.home_fragment.SlideImageItem
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
 
 class Firebase {
     private var auth: FirebaseAuth = Firebase.auth
@@ -14,6 +20,9 @@ class Firebase {
     private lateinit var email_user: String
     private lateinit var password_user: String
 
+    /**
+     * SERVICE AUTH
+     */
     //    [check login]
     fun checkLogin(): Boolean {
         val currentUser = auth.currentUser
@@ -23,6 +32,11 @@ class Firebase {
         }
         return true
     }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return auth.currentUser
+    }
+
 
     //    [create new Account in authen]
     fun createNewAccount(
@@ -81,6 +95,15 @@ class Firebase {
     //    [Logout]
     fun signOut() {
         auth.signOut()
+    }
+
+    /**
+     * SERVICE ...
+     */
+
+//    GET LIST IMAGE SLIDE
+    fun getSlideImage(): Task<QuerySnapshot> {
+        return db.collection("image_slide_location").get()
     }
 
 }
