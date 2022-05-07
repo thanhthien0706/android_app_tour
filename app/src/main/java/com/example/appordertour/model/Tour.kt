@@ -15,5 +15,6 @@ data class Tour(
     var avater: String? = "https://firebasestorage.googleapis.com/v0/b/app-order-tour-dacs3.appspot.com/o/bg_traveljpg.jpg?alt=media&token=e89a8037-db97-4e27-a4fa-68e2b89f08ce",
     var isPrivate: Boolean? = true,
     var description: String? = "",
-    var listImage: List<String>? = null
+    var listImage: List<String>? = null,
+    var stoppoint: List<TouristStopover>? = null
 ) : Serializable
