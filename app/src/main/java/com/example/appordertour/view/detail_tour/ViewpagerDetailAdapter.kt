@@ -3,12 +3,6 @@ package com.example.appordertour.view.detail_tour
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.appordertour.view.navigation.AccountFragment
-import com.example.appordertour.view.navigation.ChatFragment
-import com.example.appordertour.view.navigation.OrderFragment
-import com.example.appordertour.view.navigation.SaleFragment
-import com.example.appordertour.view.navigation.home_fragment.HomeFragment
 
 class ViewpagerDetailAdapter(fragmentManager: FragmentManager, behavior: Int) :
     FragmentStatePagerAdapter(fragmentManager) {

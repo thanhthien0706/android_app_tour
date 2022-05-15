@@ -68,6 +68,7 @@ class TopTourItem(
             )
             bundle.putSerializable("ageTour", topTour.adults)
             bundle.putStringArrayList("listImageTour", topTour.listImage as ArrayList<String>?)
+            bundle.putString("idTour", topTour.id)
 
             val overviewDetailTourFragment = OverviewDetailTourFragment.newInstance()
             overviewDetailTourFragment.arguments = bundle

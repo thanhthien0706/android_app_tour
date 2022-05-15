@@ -1,5 +1,6 @@
 package com.example.appordertour.service
 
+import android.net.Uri
 import android.util.Log
 import com.example.appordertour.model.User
 import com.example.appordertour.view.navigation.home_fragment.SlideImageItem
@@ -11,11 +12,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import java.io.IOException
+import java.util.*
 
 
 class Firebase {
     private var auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
+    private val storageRef =
+        FirebaseStorage.getInstance().getReference()
 
     private lateinit var email_user: String
     private lateinit var password_user: String
@@ -35,6 +42,10 @@ class Firebase {
 
     fun getCurrentUser(): FirebaseUser? {
         return auth.currentUser
+    }
+
+    fun getUserData(id: String): Task<QuerySnapshot> {
+        return db.collection("users").whereEqualTo("id", id).get()
     }
 
 
@@ -81,6 +92,66 @@ class Firebase {
         }
     }
 
+
+    //    [ Update data user ]
+    fun updateUser(
+        email: String,
+        address: String,
+        user_namne: String,
+        phone: String,
+        birthday: String,
+        gender: String,
+        filePath: Uri?,
+        callback: (status: Boolean) -> Unit
+    ) {
+        if (filePath != null) {
+            uploadImage("user", filePath).addOnSuccessListener {
+                it.storage.downloadUrl.addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        db.collection("users").document(getCurrentUser()?.uid.toString()).update(
+                            mapOf(
+                                "userName" to user_namne,
+                                "mail" to email,
+                                "phone" to phone,
+                                "gender" to gender,
+                                "avatar" to it.result.toString(),
+                                "date" to birthday,
+                                "address" to address,
+                            )
+                        )
+                            .addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    callback.invoke(true)
+                                } else {
+                                    callback.invoke(false)
+                                }
+                            }
+                    }
+                }
+            }
+        } else {
+            db.collection("users").document(getCurrentUser()?.uid.toString()).update(
+                mapOf(
+                    "userName" to user_namne,
+                    "mail" to email,
+                    "phone" to phone,
+                    "gender" to gender,
+                    "date" to birthday,
+                    "address" to address,
+                )
+            )
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        callback.invoke(true)
+                    } else {
+                        callback.invoke(false)
+                    }
+                }
+        }
+
+
+    }
+
     //    [ SIGNIN  ]
     fun signIn(email: String, password: String, callback: (status: Boolean) -> Unit) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -104,6 +175,14 @@ class Firebase {
 //    GET LIST IMAGE SLIDE
     fun getSlideImage(): Task<QuerySnapshot> {
         return db.collection("image_slide_location").get()
+    }
+
+    fun uploadImage(collection: String, filImg: Uri): UploadTask {
+        if (filImg != null) {
+            val ref = storageRef.child("/$collection/" + UUID.randomUUID())
+            return ref.putFile(filImg)
+        }
+        return throw IOException()
     }
 
 }
