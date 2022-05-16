@@ -90,10 +90,13 @@ class AccountFragment : Fragment {
             mFirebase.getCurrentUser()?.uid.toString()
         ).addOnCompleteListener {
             if (it.isSuccessful) {
-                val dataUser = it.result.documents[0]
-
-                Picasso.get().load(dataUser.get("avatar").toString()).into(userAvatar)
-                tvNameAccountFragment.setText(dataUser.get("userName").toString())
+                if (!it.result.isEmpty) {
+                    val dataUser = it.result.documents[0]
+                    Picasso.get().load(dataUser.get("avatar").toString()).into(userAvatar)
+                    tvNameAccountFragment.setText(dataUser.get("userName").toString())
+                } else {
+                    btnSeenAccount.visibility = View.GONE
+                }
             }
         }
     }

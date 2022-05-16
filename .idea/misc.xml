@@ -10,6 +10,7 @@
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/border_button.xml" value="0.1785" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/btn_custom_1.xml" value="0.2085" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/btn_custom_2.xml" value="0.1655" />
+        <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/btn_custom_3.xml" value="0.127" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/circle_custom.xml" value="0.1915" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/custom_navigation.xml" value="0.1785" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/drawable/edt_search.xml" value="0.1785" />
@@ -26,6 +27,7 @@
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/font/font_roboto_bold.xml" value="0.3046875" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/font/txt_name_tour.xml" value="0.3046875" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/layout/activity_chat.xml" value="0.264" />
+        <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/layout/activity_detail_booking_tour.xml" value="0.27447916666666666" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/layout/activity_detail_tour.xml" value="0.264" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/layout/activity_information_account.xml" value="0.2" />
         <entry key="..\:/DO_AN_CO_SO/DO_AN_3/AppOrderTour/app/src/main/res/layout/activity_login.xml" value="0.264" />

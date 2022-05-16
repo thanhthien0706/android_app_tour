@@ -67,6 +67,8 @@ class Firebase {
                         callback.invoke(true)
                     }
                 }
+            } else {
+                callback.invoke(false)
             }
         }.addOnFailureListener {
             callback.invoke(false)
@@ -83,10 +85,12 @@ class Firebase {
             val user = User(id = idUser, userName = name_user, mail = email_user)
 
             if (idUser != null) {
-                db.collection("users").document(idUser).set(user).addOnSuccessListener {
-                    callback.invoke(true)
-                }.addOnFailureListener {
-                    callback.invoke(false)
+                db.collection("users").document(idUser).set(user).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        callback.invoke(true)
+                    } else {
+                        callback.invoke(false)
+                    }
                 }
             }
         }

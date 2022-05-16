@@ -90,7 +90,7 @@ class TourService {
     fun createOrderTour(idTour: String, idUser: String, callback: (status: Boolean) -> Unit) {
         val dataOrderTour = OrderTour(
             idUser, arrayListOf(
-                ItemIdTour(idTour, Calendar.getInstance().time.time)
+                ItemIdTour(idTour, "booking", Calendar.getInstance().time.time)
             )
         )
 
@@ -99,7 +99,13 @@ class TourService {
                 if (it.result.exists()) {
                     db.collection("order_tour").document(idUser).update(
                         "listIdTour",
-                        FieldValue.arrayUnion(ItemIdTour(idTour, Calendar.getInstance().time.time))
+                        FieldValue.arrayUnion(
+                            ItemIdTour(
+                                idTour,
+                                "booking",
+                                Calendar.getInstance().time.time
+                            )
+                        )
                     ).addOnCompleteListener {
                         callback.invoke(true)
                     }
@@ -118,7 +124,7 @@ class TourService {
     fun addOrderTour(idTour: String, idUser: String): Task<Void> {
         return db.collection("order_tour").document(idUser).update(
             "listIdTour",
-            FieldValue.arrayUnion(ItemIdTour(idTour, Calendar.getInstance().time.time))
+            FieldValue.arrayUnion(ItemIdTour(idTour, "booking", Calendar.getInstance().time.time))
         )
     }
 
@@ -130,7 +136,7 @@ class TourService {
         return db.collection("order_tour").document(idUser).update(
             "listIdTour",
             FieldValue.arrayRemove(
-                ItemIdTour(idTour, createAt)
+                ItemIdTour(idTour, "booking", createAt)
             )
         )
     }

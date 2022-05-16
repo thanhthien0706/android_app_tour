@@ -3,6 +3,7 @@ package com.example.appordertour.view.auth
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,13 +45,24 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnRegister.setOnClickListener {
 
+
+//            Log.d(
+//                "testDuLieu",
+//                "${email.text?.trim().toString()} ${
+//                    pass.text?.trim().toString()
+//                }  ${userName.text?.trim().toString()}"
+//            )
+
             firebase.createNewAccount(
                 email.text?.trim().toString(),
                 pass.text?.trim().toString(),
                 userName.text?.trim().toString()
             ) { status ->
                 if (status == true) {
-                    Toast.makeText(this, "register thanh cong", Toast.LENGTH_LONG).show()
+                    startActivity(
+                        Intent(application, LoginActivity::class.java)
+                    )
+                    finish()
                 } else {
                     Toast.makeText(this, "register That bai", Toast.LENGTH_LONG).show()
                 }

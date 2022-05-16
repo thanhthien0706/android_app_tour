@@ -64,6 +64,7 @@ class OrderFragment : Fragment {
                         listDataBookingTour.add(
                             ItemIdTour(
                                 dataTour.get("idTour").toString(),
+                                dataTour.get("statusBooking").toString(),
                                 dataTour.get("createAt") as Long
                             )
                         )
