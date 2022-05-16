@@ -100,8 +100,6 @@ class OverviewDetailTourFragment : Fragment() {
                         Toast.makeText(activity, "Đã thêm tour!", Toast.LENGTH_LONG).show();
                     }
                 }
-
-                Toast.makeText(activity, "Khong tồn tại", Toast.LENGTH_LONG).show();
             }
         }
 

@@ -8,6 +8,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppOrderTour">
         <activity
+            android:name=".view.ThankYouActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.navigation.booking.DetailBookingTourActivity"
             android:exported="false" />
         <activity

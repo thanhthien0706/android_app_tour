@@ -51,6 +51,14 @@ class TourService {
     }
 
     /**
+     * GET CATEGORY TOUR
+     */
+
+    fun getAllCategoryTour(): Task<QuerySnapshot> {
+        return db.collection("category_tour").get()
+    }
+
+    /**
      * ADD ORDER TOUR
      */
 
@@ -139,6 +147,18 @@ class TourService {
                 ItemIdTour(idTour, "booking", createAt)
             )
         )
+    }
+
+    /**
+     * UPDATE TOUR BOOKING
+     */
+
+    fun updateTourBookingWithId(
+        idUser: String,
+        newArrayBookingTour: MutableList<ItemIdTour>
+    ): Task<Void> {
+        return db.collection("order_tour").document(idUser)
+            .update("listIdTour", newArrayBookingTour)
     }
 }
 

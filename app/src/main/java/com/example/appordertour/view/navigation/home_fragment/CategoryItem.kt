@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.appordertour.R
+import com.example.appordertour.model.CategoryTour
+import com.squareup.picasso.Picasso
 
-class categoryAdapter(private val mListCategory: MutableList<category>) :
+class categoryAdapter(private val mListCategory: MutableList<CategoryTour>) :
     RecyclerView.Adapter<categoryAdapter.categoryViewHolder>() {
 
     class categoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,13 +27,14 @@ class categoryAdapter(private val mListCategory: MutableList<category>) :
     }
 
     override fun onBindViewHolder(holder: categoryViewHolder, position: Int) {
-        val category: category = mListCategory[position]
+        val category: CategoryTour = mListCategory[position]
 
         if (category == null) {
             return
         }
 
-        holder.resourceImage.setImageResource(category.resourceImage)
+//        holder.resourceImage.setImageResource(category.resourceImage)
+        Picasso.get().load(category.resourceImage).into(holder.resourceImage)
         holder.tvNameCategory.setText(category.name)
     }
 
@@ -39,4 +43,3 @@ class categoryAdapter(private val mListCategory: MutableList<category>) :
     }
 }
 
-data class category(val resourceImage: Int, val description: String, val name: String)

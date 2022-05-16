@@ -105,7 +105,7 @@ class InformationAccountActivity : AppCompatActivity() {
             filePath
         ) { status ->
             if (status) {
-
+                Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_LONG).show();
                 initDataSetting()
             } else {
                 Toast.makeText(this, "Cập nhật thất bại", Toast.LENGTH_LONG).show();

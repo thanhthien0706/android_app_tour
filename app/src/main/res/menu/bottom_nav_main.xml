@@ -11,10 +11,10 @@
         android:icon="@drawable/chat_nav"
         android:title="@string/chat_menu" />
 
-    <item
-        android:id="@+id/sale_nav_bt"
-        android:icon="@drawable/sale_price_tag_nav"
-        android:title="@string/preferential_menu" />
+<!--    <item-->
+<!--        android:id="@+id/sale_nav_bt"-->
+<!--        android:icon="@drawable/sale_price_tag_nav"-->
+<!--        android:title="@string/preferential_menu" />-->
 
     <item
         android:id="@+id/order_nav_bt"

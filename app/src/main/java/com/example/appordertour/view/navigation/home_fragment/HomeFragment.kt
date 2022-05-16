@@ -1,6 +1,8 @@
 package com.example.appordertour.view.navigation.home_fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +15,11 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.appordertour.R
+import com.example.appordertour.model.CategoryTour
 import com.example.appordertour.model.Tour
 import com.example.appordertour.service.Firebase
 import com.example.appordertour.service.TourService
+import java.util.*
 
 class HomeFragment : Fragment {
     constructor()
@@ -24,26 +28,13 @@ class HomeFragment : Fragment {
     private lateinit var mView: View
     private var listDataSlideImage = mutableListOf<SlideImage>()
     private var listDataTopTour = mutableListOf<Tour>()
+    private var listDataCategoryTour = mutableListOf<CategoryTour>()
     private lateinit var rcvCategory: RecyclerView
     private lateinit var rcvTopTour: RecyclerView
+    private lateinit var mTimer: Timer
 
-//    private var mHandler: Handler = Handler(Looper.getMainLooper())
-//    private var mRunnable: Runnable = Runnable {
-//        object : Runnable {
-//            override fun run() {
-//                var currentPosition: Int = vpg_slide_image.currentItem
-//                if (currentPosition == listDataSlideImage.size - 1) {
-//                    vpg_slide_image.setCurrentItem(0)
-//                } else {
-//                    vpg_slide_image.setCurrentItem(currentPosition + 1)
-//                }
-//            }
-//
-//        }
-//    }
-
-    private val firebase = Firebase()
-    private val tourservice = TourService()
+    private val mFirebase = Firebase()
+    private val mTourService = TourService()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +51,6 @@ class HomeFragment : Fragment {
     }
 
     private fun onEvents() {
-
     }
 
     private fun onControlers() {
@@ -71,6 +61,35 @@ class HomeFragment : Fragment {
         handlerSlideImage()
         handleCategory()
         handleTopTour()
+
+    }
+
+    private fun autoSlideImage() {
+        if (listDataSlideImage == null || listDataSlideImage.isEmpty() || vpg_slide_image == null) {
+            return
+        }
+        mTimer = Timer()
+
+        val timerTask = object : TimerTask() {
+            override fun run() {
+                Handler(Looper.getMainLooper()).post(Runnable {
+                    fun run() {
+                        var currentItem: Int = vpg_slide_image.currentItem
+                        var totalItem = listDataSlideImage.size - 1
+                        if (currentItem < totalItem) {
+                            currentItem++
+                            vpg_slide_image.setCurrentItem(currentItem)
+                        } else {
+                            vpg_slide_image.setCurrentItem(0)
+                        }
+                    }
+                    run()
+                })
+            }
+
+        }
+
+        mTimer.schedule(timerTask, 200, 2000)
     }
 
     /**
@@ -92,7 +111,7 @@ class HomeFragment : Fragment {
 
         vpg_slide_image.setPageTransformer(mCompositePageTransformer)
 
-        firebase.getSlideImage().addOnCompleteListener { task ->
+        mFirebase.getSlideImage().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.getResult()) {
                     listDataSlideImage.add(
@@ -105,6 +124,8 @@ class HomeFragment : Fragment {
                 var slideImageAdapter = SlideImageItem(listDataSlideImage)
                 vpg_slide_image.adapter = slideImageAdapter
 
+                autoSlideImage()
+
             } else {
             }
         }
@@ -115,7 +136,8 @@ class HomeFragment : Fragment {
      */
     private fun handleCategory() {
         rcvCategory.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        rcvCategory.adapter = categoryAdapter(setData())
+        setDataCategory()
+
     }
 
     /**
@@ -128,7 +150,7 @@ class HomeFragment : Fragment {
         rcvTopTour.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-        tourservice.getLimitTour().addOnCompleteListener { task ->
+        mTourService.getLimitTour().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.getResult()) {
                     listDataTopTour.add(
@@ -157,17 +179,35 @@ class HomeFragment : Fragment {
 
     }
 
-    private fun setData(): MutableList<category> {
-        return mutableListOf(
-            category(R.drawable.luffy_5, "hay qua di", "Biển"),
-            category(R.drawable.luffy_6, "hay qua di", "Rừng"),
-            category(R.drawable.luffy_7, "hay qua di", "Sông"),
-            category(R.drawable.luffy_8, "hay qua di", "Suối"),
+    private fun setDataCategory() {
 
-            category(R.drawable.luffy_5, "hay qua di", "Biển"),
-            category(R.drawable.luffy_6, "hay qua di", "Rừng"),
-            category(R.drawable.luffy_7, "hay qua di", "Sông"),
-            category(R.drawable.luffy_8, "hay qua di", "Suối"),
-        )
+        mTourService.getAllCategoryTour().addOnCompleteListener {
+            if (it.isSuccessful) {
+                for (document in it.result) {
+                    listDataCategoryTour.add(
+                        CategoryTour(
+                            document.get("resourceImage").toString(),
+                            document.get("description").toString(),
+                            document.get("name").toString()
+                        )
+                    )
+                }
+
+                rcvCategory.adapter = categoryAdapter(listDataCategoryTour)
+
+            }
+        }
+//
+//        return mutableListOf(
+//            CategoryTour(R.drawable.luffy_5, "hay qua di", "Biển"),
+//            CategoryTour(R.drawable.luffy_6, "hay qua di", "Rừng"),
+//            CategoryTour(R.drawable.luffy_7, "hay qua di", "Sông"),
+//            CategoryTour(R.drawable.luffy_8, "hay qua di", "Suối"),
+//
+//            CategoryTour(R.drawable.luffy_5, "hay qua di", "Biển"),
+//            CategoryTour(R.drawable.luffy_6, "hay qua di", "Rừng"),
+//            CategoryTour(R.drawable.luffy_7, "hay qua di", "Sông"),
+//            CategoryTour(R.drawable.luffy_8, "hay qua di", "Suối"),
+//        )
     }
 }

@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), OnItemClickTour {
                     }
 
                 }
-                R.id.sale_nav_bt -> mViewPager.setCurrentItem(2)
+//                R.id.sale_nav_bt -> mViewPager.setCurrentItem(2)
                 R.id.order_nav_bt -> mViewPager.setCurrentItem(3)
                 R.id.account_nav_bt -> {
                     if (mFirebase.checkLogin()) {

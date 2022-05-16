@@ -15,6 +15,7 @@ import com.example.appordertour.R
 import com.example.appordertour.model.Tour
 import com.example.appordertour.util.BaseCustom
 import com.example.appordertour.view.MainActivity
+import com.example.appordertour.view.detail_tour.ActivitiesDetailTourFragment
 import com.example.appordertour.view.detail_tour.DetailTourActivity
 import com.example.appordertour.view.detail_tour.ImageDetailTourFragment
 import com.example.appordertour.view.detail_tour.OverviewDetailTourFragment
@@ -75,6 +76,9 @@ class TopTourItem(
 
             val imageDetailTourFragment = ImageDetailTourFragment.newInstance()
             imageDetailTourFragment.arguments = bundle
+
+            val activitiesDetailTourFragment = ActivitiesDetailTourFragment.newInstance()
+            activitiesDetailTourFragment.arguments = bundle
 
             intent.putExtras(bundle)
             context?.startActivity(intent)

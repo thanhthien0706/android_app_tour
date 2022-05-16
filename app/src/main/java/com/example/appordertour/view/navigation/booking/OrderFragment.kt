@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ class OrderFragment : Fragment {
     private var listDataBookingTour = mutableListOf<ItemIdTour>()
     private lateinit var rcvBookingTour: RecyclerView
     private lateinit var adapterBookingTour: ItemBookingTour
+    private lateinit var tv_not_login: TextView
 
     private val mTourService = TourService()
     private val mFireBase = Firebase()
@@ -45,36 +47,45 @@ class OrderFragment : Fragment {
     private fun addControlls() {
 
         rcvBookingTour = mView.findViewById(R.id.rcv_booking_tour)
+        tv_not_login = mView.findViewById(R.id.tv_not_login)
 
         initData()
     }
 
     private fun initData() {
-        rcvBookingTour.isNestedScrollingEnabled = false
-        rcvBookingTour.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        if (mFireBase.checkLogin()) {
+            tv_not_login.visibility = View.GONE
+            rcvBookingTour.isNestedScrollingEnabled = false
+            rcvBookingTour.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-        mTourService.getOrderTourWithId(mFireBase.getCurrentUser()!!.uid).addOnCompleteListener {
-            if (it.isSuccessful) {
-                if (it.result.exists()) {
+            mTourService.getOrderTourWithId(mFireBase.getCurrentUser()!!.uid)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        if (it.result.exists()) {
 //                    it.result.get("listIdTour")
-                    for (document in it.result.get("listIdTour") as ArrayList<*>) {
-                        var dataTour = document as HashMap<String, ItemIdTour>
+                            for (document in it.result.get("listIdTour") as ArrayList<*>) {
+                                var dataTour = document as HashMap<String, ItemIdTour>
 
-                        listDataBookingTour.add(
-                            ItemIdTour(
-                                dataTour.get("idTour").toString(),
-                                dataTour.get("statusBooking").toString(),
-                                dataTour.get("createAt") as Long
-                            )
-                        )
+                                if (dataTour.get("statusBooking").toString() == "booking") {
+                                    listDataBookingTour.add(
+                                        ItemIdTour(
+                                            dataTour.get("idTour").toString(),
+                                            dataTour.get("statusBooking").toString(),
+                                            dataTour.get("createAt") as Long
+                                        )
+                                    )
+                                }
+                            }
+
+                            val bookingTourApdapter = ItemBookingTour(listDataBookingTour)
+                            rcvBookingTour.adapter = bookingTourApdapter
+
+                        }
                     }
-
-                    val bookingTourApdapter = ItemBookingTour(listDataBookingTour)
-                    rcvBookingTour.adapter = bookingTourApdapter
-
                 }
-            }
+        } else {
+
         }
     }
 }
