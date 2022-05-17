@@ -68,7 +68,7 @@ class TourService {
                                 endDate = document.get("endDate") as Long,
                                 adults = document.get("adults") as Long,
                                 avater = document.get("avater").toString(),
-                                isPrivate = document.get("isPrivate") as Boolean,
+                                isPrivate = document.get("isPrivate") as Boolean?,
                                 description = document.get("description").toString(),
                                 listImage = document.get("listImage") as List<String>,
                                 stoppoint = document.get("stoppoint") as List<TouristStopover>
