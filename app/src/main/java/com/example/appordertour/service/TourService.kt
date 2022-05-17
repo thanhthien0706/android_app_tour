@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.appordertour.model.ItemIdTour
 import com.example.appordertour.model.OrderTour
+import com.example.appordertour.model.Tour
 import com.example.appordertour.model.TouristStopover
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
@@ -50,13 +51,52 @@ class TourService {
         return db.collection("order_tour").document(idUser).get()
     }
 
+    fun getTourWithCategoryTour(idCategoryTour: String, callback: (listTour: List<Tour>) -> Unit) {
+        db.collection("tour").get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                var listTour = mutableListOf<Tour>()
+
+                for (document in it.result) {
+                    if (document.get("categoryTour").toString() == idCategoryTour.trim()) {
+
+                        listTour.add(
+                            Tour(
+                                id = document.id,
+                                status = document.get("status").toString(),
+                                nameTour = document.get("nameTour").toString(),
+                                location = document.get("location").toString(),
+                                categoryTour = document.get("categoryTour").toString(),
+                                price = document.get("price") as Long,
+                                startDate = document.get("startDate") as Long,
+                                endDate = document.get("endDate") as Long,
+                                adults = document.get("adults") as Long,
+                                avater = document.get("avater").toString(),
+                                isPrivate = document.get("isPrivate") as Boolean,
+                                description = document.get("description").toString(),
+                                listImage = document.get("listImage") as List<String>,
+                                stoppoint = document.get("stoppoint") as List<TouristStopover>
+                            )
+                        )
+                    }
+                }
+
+                callback.invoke(listTour)
+            }
+        }
+    }
+
     /**
-     * GET CATEGORY TOUR
+     * CATEGORY TOUR
      */
+
+    fun getCategoryTour(idCategoryTour: String): Task<DocumentSnapshot> {
+        return db.collection("category_tour").document(idCategoryTour).get()
+    }
 
     fun getAllCategoryTour(): Task<QuerySnapshot> {
         return db.collection("category_tour").get()
     }
+
 
     /**
      * ADD ORDER TOUR

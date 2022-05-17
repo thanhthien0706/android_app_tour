@@ -26,8 +26,8 @@ class OverviewDetailTourFragment : Fragment() {
     private lateinit var tvCategoryDetail: TextView
     private lateinit var tvDateDetail: TextView
     private lateinit var tvAgeDetail: TextView
-    private lateinit var btnBuyNow: Button
-    private lateinit var btnAddOrder: ImageButton
+//    private lateinit var btnBuyNow: Button
+    private lateinit var btnAddOrder: Button
 
     private val mFirebase = Firebase()
     private val mTourService = TourService()
@@ -60,15 +60,25 @@ class OverviewDetailTourFragment : Fragment() {
         tvDateDetail.setText(ourInstance.arguments?.getString("dateTour").toString())
         tvAgeDetail.setText(ourInstance.arguments?.getString("ageTour").toString())
 
-        btnBuyNow.setOnClickListener {
-            if (mFirebase.checkLogin()) {
+        var idCategoryPass: String =
+            ourInstance.arguments?.getString("idCategorytour")?.trim().toString()
 
-            } else {
-                startActivity(
-                    Intent(activity, LoginActivity::class.java)
-                )
+        mTourService.getCategoryTour(idCategoryPass).addOnCompleteListener {
+            if (it.isSuccessful) {
+                tvCategoryDetail.setText(it.result.data?.get("name").toString())
             }
         }
+
+
+//        btnBuyNow.setOnClickListener {
+//            if (mFirebase.checkLogin()) {
+//
+//            } else {
+//                startActivity(
+//                    Intent(activity, LoginActivity::class.java)
+//                )
+//            }
+//        }
 
         btnAddOrder.setOnClickListener {
             handleAddOrderTour()
@@ -82,14 +92,6 @@ class OverviewDetailTourFragment : Fragment() {
             mFirebase.getCurrentUser()?.uid.toString()
         ) { status ->
             if (status) {
-//                mTourService.addOrderTour(
-//                    ourInstance.arguments?.getString("idTour").toString(),
-//                    mFirebase.getCurrentUser()?.uid.toString()
-//                ).addOnCompleteListener {
-//                    if (it.isSuccessful) {
-//                        Toast.makeText(activity, "Đã thêm tour!", Toast.LENGTH_LONG).show();
-//                    }
-//                }
                 Toast.makeText(activity, "Bạn đã đặt tour này", Toast.LENGTH_LONG).show();
             } else {
                 mTourService.createOrderTour(
@@ -111,8 +113,13 @@ class OverviewDetailTourFragment : Fragment() {
         tvCategoryDetail = mView.findViewById(R.id.tv_category_detail)
         tvDateDetail = mView.findViewById(R.id.tv_date_detail)
         tvAgeDetail = mView.findViewById(R.id.tv_age_deatail)
-        btnBuyNow = mView.findViewById(R.id.btn_buy_now)
+//        btnBuyNow = mView.findViewById(R.idbtn_buy_now)
         btnAddOrder = mView.findViewById(R.id.btn_add_order)
+
+    }
+
+    private fun initDataTourDetail() {
+
 
     }
 

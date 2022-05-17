@@ -166,7 +166,8 @@ class HomeFragment : Fragment {
                             avater = document.getData().get("avater") as String?,
                             isPrivate = document.getData().get("isPrivate") as Boolean?,
                             description = document.getData().get("description") as String?,
-                            listImage = document.getData().get("listImage") as List<String>?
+                            listImage = document.getData().get("listImage") as List<String>?,
+                            categoryTour = document.getData().get("categoryTour") as String?
                         )
                     )
                 }
@@ -186,6 +187,7 @@ class HomeFragment : Fragment {
                 for (document in it.result) {
                     listDataCategoryTour.add(
                         CategoryTour(
+                            document.id.toString().trim(),
                             document.get("resourceImage").toString(),
                             document.get("description").toString(),
                             document.get("name").toString()

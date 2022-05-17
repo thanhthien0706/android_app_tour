@@ -26,6 +26,7 @@ class AccountFragment : Fragment {
     private lateinit var btnSeenAccount: LinearLayout
     private lateinit var btnSeenNotify: LinearLayout
     private lateinit var btnSeenFavoriteTour: LinearLayout
+    private lateinit var btn_tour_account: LinearLayout
     private lateinit var btnLogout: Button
     private lateinit var userAvatar: CircleImageView
     private lateinit var tvNameAccountFragment: TextView
@@ -56,6 +57,15 @@ class AccountFragment : Fragment {
             )
         }
 
+        btn_tour_account.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    MyTourActivity::class.java
+                )
+            )
+        }
+
         btnSeenNotify.setOnClickListener {
         }
 
@@ -75,6 +85,7 @@ class AccountFragment : Fragment {
         btnSeenAccount = mView.findViewById(R.id.btn_seen_account)
         btnSeenNotify = mView.findViewById(R.id.btn_seen_notify)
         btnSeenFavoriteTour = mView.findViewById(R.id.btn_seen_favorite_tour)
+        btn_tour_account = mView.findViewById(R.id.btn_tour_account)
         btnLogout = mView.findViewById(R.id.btn_logout)
         userAvatar = mView.findViewById(R.id.userAvatar)
         tvNameAccountFragment = mView.findViewById(R.id.tv_name_account_fragment)

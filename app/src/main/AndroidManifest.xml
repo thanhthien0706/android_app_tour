@@ -8,6 +8,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppOrderTour">
         <activity
+            android:name=".view.navigation.account.MyTourActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.navigation.home_fragment.AllTourWithCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ThankYouActivity"
             android:exported="false" />
         <activity

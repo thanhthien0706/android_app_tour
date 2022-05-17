@@ -34,37 +34,12 @@ class MainActivity : AppCompatActivity(), OnItemClickTour {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        getWindow().setFlags(
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN
-//        );
-//        hideSystemBars()
-
         window?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
         window.statusBarColor = Color.TRANSPARENT
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        tourService.createTour(
-//            TouristStopover(
-//                nameStopover = "vinpearl nha trang",
-//                address = "",
-//                listImage = listOf(
-//                    "https://firebasestorage.googleapis.com/v0/b/app-order-tour-dacs3.appspot.com/o/image_tour%2Fcap_treo.jpg?alt=media&token=a86f5cf0-73b7-463d-850b-b7f72f9bc587",
-//                    "https://firebasestorage.googleapis.com/v0/b/app-order-tour-dacs3.appspot.com/o/image_tour%2Fcap_treo.jpg?alt=media&token=a86f5cf0-73b7-463d-850b-b7f72f9bc587",
-//                    "https://firebasestorage.googleapis.com/v0/b/app-order-tour-dacs3.appspot.com/o/image_tour%2Fcap_treo.jpg?alt=media&token=a86f5cf0-73b7-463d-850b-b7f72f9bc587",
-//                    "https://firebasestorage.googleapis.com/v0/b/app-order-tour-dacs3.appspot.com/o/image_tour%2Fcap_treo.jpg?alt=media&token=a86f5cf0-73b7-463d-850b-b7f72f9bc587",
-//                )
-//            )
-//        ) { status ->
-//            if (status) {
-//                Log.d("thong_bao_data", "thanh cong")
-//            } else {
-//                Log.d("thong_bao_data", "that bai")
-//            }
-//        }
 
         addControls()
         addEvents()

@@ -8,6 +8,7 @@ data class Tour(
     var status: String? = "",
     var nameTour: String? = "",
     var location: String? = "",
+    var categoryTour: String? = "",
     var price: Long? = 0,
     var startDate: Long? = 0,
     var endDate: Long? = 0,

@@ -67,9 +67,10 @@ class TopTourItem(
                     baseCustom.convertLongToTime(topTour.endDate)
                 }"
             )
-            bundle.putSerializable("ageTour", topTour.adults)
+            bundle.putString("ageTour", topTour.adults.toString())
             bundle.putStringArrayList("listImageTour", topTour.listImage as ArrayList<String>?)
             bundle.putString("idTour", topTour.id)
+            bundle.putString("idCategorytour", topTour.categoryTour)
 
             val overviewDetailTourFragment = OverviewDetailTourFragment.newInstance()
             overviewDetailTourFragment.arguments = bundle
