@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -12,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.appordertour.R
+import com.example.appordertour.model.BuyTour
 import com.example.appordertour.model.ItemIdTour
 import com.example.appordertour.service.Firebase
 import com.example.appordertour.service.TourService
@@ -21,6 +21,7 @@ import com.example.appordertour.view.ThankYouActivity
 import com.example.appordertour.view.navigation.account.InformationAccountActivity
 import org.joda.time.DateTime
 import org.joda.time.Days
+import java.util.*
 
 class DetailBookingTourActivity : AppCompatActivity() {
 
@@ -89,55 +90,33 @@ class DetailBookingTourActivity : AppCompatActivity() {
         if (tv_name_user_deatail_booking_tour.text == "" || tv_email_deatail_booking_tour.text == "" || tv_phone_deatail_booking_tour.text == "" || tv_location_deatail_booking_tour.text == "") {
             Toast.makeText(this, "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_LONG).show()
         } else {
-
-            mTourService.getOrderTourWithId(mFirebase.getCurrentUser()?.uid.toString())
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val listTourBooking =
-                            it.result.data?.get("listIdTour") as MutableList<*>
-
-                        val newArrayTourBooking = mutableListOf<ItemIdTour>()
-
-                        for (document in listTourBooking) {
-                            val dataDocument = document as HashMap<String, ItemIdTour>
-                            if (dataDocument.get("idTour")
-                                    .toString() == objectBookingTourDetail.idTour.toString()
-                            ) {
-                                newArrayTourBooking.add(
-                                    ItemIdTour(
-                                        dataDocument.get("idTour").toString(),
-                                        "sold",
-                                        dataDocument.get("createAt") as Long
-                                    )
-                                )
-                            } else {
-                                newArrayTourBooking.add(
-                                    ItemIdTour(
-                                        dataDocument.get("idTour").toString(),
-                                        dataDocument.get("statusBooking").toString(),
-                                        dataDocument.get("createAt") as Long
-                                    )
-                                )
-                            }
+            mTourService.buyTour(
+                BuyTour(
+                    UUID.randomUUID().toString(),
+                    mFirebase.getCurrentUser()?.uid.toString(),
+                    objectBookingTourDetail.idTour,
+                    false,
+                    Calendar.getInstance().time.time
+                )
+            ) { status ->
+                if (status) {
+                    mTourService.removeBookingTourWithId(
+                        objectBookingTourDetail.idTour,
+                        objectBookingTourDetail.createAt,
+                        mFirebase.getCurrentUser()?.uid.toString()
+                    ).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            startActivity(
+                                Intent(this, ThankYouActivity::class.java)
+                            )
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Đặt tour không thành công", Toast.LENGTH_LONG)
+                                .show()
                         }
-
-                        mTourService.updateTourBookingWithId(
-                            mFirebase.getCurrentUser()?.uid.toString(),
-                            newArrayTourBooking
-                        ).addOnCompleteListener {
-                            if (it.isSuccessful) {
-
-                                startActivity(
-                                    Intent(this, ThankYouActivity::class.java)
-                                )
-                                finish()
-
-                            }
-                        }
-
                     }
                 }
-
+            }
         }
     }
 

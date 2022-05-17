@@ -56,6 +56,7 @@ class ChatActivity : AppCompatActivity() {
     private fun onHandleSendMess() {
         btnSendChat.setOnClickListener {
             val content: String = txtContentChat.text.trim().toString()
+            txtContentChat.setText("")
             messService.checkExistMessenger {
                 if (it) {
                     messService.addMessengerList("edit").addOnCompleteListener {
@@ -85,6 +86,7 @@ class ChatActivity : AppCompatActivity() {
         messService.readMessengerDetail().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 listMess.clear()
+
                 for (item in snapshot.children) {
                     val data = item.getValue(MessengerDetail::class.java)
 
@@ -130,12 +132,4 @@ class ChatActivity : AppCompatActivity() {
         listenerMessenger()
     }
 
-    private fun setData(): List<MessengerDetail> {
-        return listOf<MessengerDetail>(
-            MessengerDetail(idSender = "hEmiOlGZglXpoVX6zDFANDad9ru2", content = "chao ban"),
-            MessengerDetail(idSender = "RoMVVmdZc9ilKNCLL8GI", content = "chao ban"),
-            MessengerDetail(idSender = "hEmiOlGZglXpoVX6zDFANDad9ru2", content = "chao ban"),
-            MessengerDetail(idSender = "RoMVVmdZc9ilKNCLL8GI", content = "chao ban"),
-        )
-    }
 }

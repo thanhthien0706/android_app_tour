@@ -1,5 +1,6 @@
 package com.example.appordertour.view.navigation.chat
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import com.example.appordertour.R
 import com.example.appordertour.model.Messenger
 import com.example.appordertour.model.MessengerDetail
 import com.example.appordertour.service.Firebase
+import com.example.appordertour.view.MainActivity
+import com.example.appordertour.view.admin.MainAdminActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 
@@ -21,6 +24,7 @@ class ChatAdapter(private val mListChat: List<MessengerDetail>) :
     }
 
     private var auth: FirebaseAuth = com.google.firebase.ktx.Firebase.auth
+    private val mFirebase = Firebase()
 
     class ChatMeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvMeChat: TextView = itemView.findViewById(R.id.tv_me_chat)
@@ -32,6 +36,8 @@ class ChatAdapter(private val mListChat: List<MessengerDetail>) :
 
     override fun getItemViewType(position: Int): Int {
         val mess: MessengerDetail = mListChat[position]
+//        var roleView: Int = 0
+
 
         if (auth.currentUser?.uid == mess.idSender) {
             return TYPE_ME_CHAT

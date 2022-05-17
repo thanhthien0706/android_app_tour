@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appordertour.databinding.ActivityLoginBinding
 import com.example.appordertour.service.Firebase
 import com.example.appordertour.view.MainActivity
+import com.example.appordertour.view.admin.MainAdminActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tv_select_register: TextView
     private lateinit var txt_email_login: TextInputEditText
     private lateinit var txt_pass_login: TextInputEditText
+
+    private val mFirebase = Firebase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +54,25 @@ class LoginActivity : AppCompatActivity() {
 
             firebase.signIn(valEmail, valPass) { status ->
                 if (status) {
-                    startActivity(
-                        Intent(applicationContext, MainActivity::class.java)
-                    )
-                    finish()
+                    mFirebase.getUserData(mFirebase.getCurrentUser()?.uid.toString())
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                if (!it.result.isEmpty) {
+                                    val dataUser = it.result.documents[0]
+                                    if (dataUser.get("permission").toString() == "user") {
+                                        startActivity(
+                                            Intent(this, MainActivity::class.java)
+                                        )
+                                        finish()
+                                    } else if (dataUser.get("permission").toString() == "admin") {
+                                        startActivity(
+                                            Intent(this, MainAdminActivity::class.java)
+                                        )
+                                        finish()
+                                    }
+                                }
+                            }
+                        }
                 } else {
                     Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_LONG).show()
                 }

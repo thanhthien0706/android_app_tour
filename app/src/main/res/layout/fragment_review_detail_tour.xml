@@ -8,17 +8,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_add_comment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:strokeColor="@color/main_button">
+            android:fontFamily="@font/roboto_bold"
+            android:text="Để lại bình luận"
+            android:textColor="@color/main_button"
+            android:textSize="16dp" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp">
 
-        </com.google.android.material.card.MaterialCardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_comment_tour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp" />
 
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

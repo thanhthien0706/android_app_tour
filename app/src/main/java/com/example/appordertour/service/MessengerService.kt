@@ -1,5 +1,6 @@
 package com.example.appordertour.service
 
+import android.util.Log
 import com.example.appordertour.model.Messenger
 import com.example.appordertour.model.MessengerDetail
 import com.google.android.gms.tasks.Task
@@ -70,7 +71,7 @@ class MessengerService {
     }
 
     fun readMessengerDetail(): Query {
-        return database.child("messenger_detail").orderByChild("createAt").limitToFirst(30)
+        return database.child("messenger_detail").orderByChild("createAt")
     }
 
 }

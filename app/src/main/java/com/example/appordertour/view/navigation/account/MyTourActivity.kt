@@ -2,12 +2,14 @@ package com.example.appordertour.view.navigation.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appordertour.R
+import com.example.appordertour.model.BuyTour
 import com.example.appordertour.model.ItemIdTour
 import com.example.appordertour.service.Firebase
 import com.example.appordertour.service.TourService
@@ -18,6 +20,7 @@ class MyTourActivity : AppCompatActivity() {
     private lateinit var rcv_my_tour: RecyclerView
     private lateinit var tv_not_login_my_tour: TextView
     private var listDataMyTour = mutableListOf<ItemIdTour>()
+    private var mListDataMyTour = mutableListOf<BuyTour>()
 
     private val mTourService = TourService()
     private val mFireBase = Firebase()
@@ -32,6 +35,9 @@ class MyTourActivity : AppCompatActivity() {
 
     private fun addEvents() {
 
+        btn_back_my_tour.setOnClickListener {
+            finish()
+        }
     }
 
     private fun addControls() {
@@ -40,6 +46,8 @@ class MyTourActivity : AppCompatActivity() {
         tv_not_login_my_tour = findViewById(R.id.tv_not_login_my_tour)
 
         initData()
+
+
     }
 
     private fun initData() {
@@ -49,31 +57,12 @@ class MyTourActivity : AppCompatActivity() {
             rcv_my_tour.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-            mTourService.getOrderTourWithId(mFireBase.getCurrentUser()!!.uid)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        if (it.result.exists()) {
-//                    it.result.get("listIdTour")
-                            for (document in it.result.get("listIdTour") as ArrayList<*>) {
-                                var dataTour = document as HashMap<String, ItemIdTour>
+            mTourService.getBuyTourWithId(mFireBase.getCurrentUser()!!.uid) { listBuyTour ->
+                mListDataMyTour.addAll(listBuyTour)
+                val myTourApdapter = ItemMyTour(mListDataMyTour)
+                rcv_my_tour.adapter = myTourApdapter
+            }
 
-                                if (dataTour.get("statusBooking").toString() == "sold") {
-                                    listDataMyTour.add(
-                                        ItemIdTour(
-                                            dataTour.get("idTour").toString(),
-                                            dataTour.get("statusBooking").toString(),
-                                            dataTour.get("createAt") as Long
-                                        )
-                                    )
-                                }
-                            }
-
-                            val bookingTourApdapter = ItemMyTour(listDataMyTour)
-                            rcv_my_tour.adapter = bookingTourApdapter
-
-                        }
-                    }
-                }
         } else {
 
         }

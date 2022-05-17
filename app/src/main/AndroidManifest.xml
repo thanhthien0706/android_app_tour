@@ -8,6 +8,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppOrderTour">
         <activity
+            android:name=".view.detail_tour.CommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.admin.chat_admin.ChatWithUserDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.admin.chat_admin.ChatAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.admin.MainAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MainStartActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.navigation.SeenLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.navigation.account.DetailMyTourActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.navigation.account.MyTourActivity"
             android:exported="false" />
         <activity
@@ -38,13 +65,11 @@
             android:label="@string/title_activity_register" />
         <activity
             android:name=".view.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

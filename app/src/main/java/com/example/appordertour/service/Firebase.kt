@@ -44,7 +44,7 @@ class Firebase {
         return auth.currentUser
     }
 
-    fun getUserData(id: String): Task<QuerySnapshot> {
+    fun getUserData(id: String?): Task<QuerySnapshot> {
         return db.collection("users").whereEqualTo("id", id).get()
     }
 

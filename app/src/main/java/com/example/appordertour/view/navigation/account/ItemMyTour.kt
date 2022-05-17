@@ -12,16 +12,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appordertour.R
+import com.example.appordertour.model.BuyTour
 import com.example.appordertour.model.ItemIdTour
 import com.example.appordertour.service.Firebase
 import com.example.appordertour.service.TourService
 import com.example.appordertour.util.BaseCustom
+import com.example.appordertour.view.navigation.booking.DetailBookingTourActivity
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 import org.joda.time.DateTime
 import org.joda.time.Days
 
-class ItemMyTour(private val mListBookingTour: MutableList<ItemIdTour>) :
+class ItemMyTour(private val mListBookingTour: MutableList<BuyTour>) :
     RecyclerView.Adapter<ItemMyTour.BookingTourViewHolder>() {
 
     private val mBaseCustom = BaseCustom()
@@ -37,6 +39,7 @@ class ItemMyTour(private val mListBookingTour: MutableList<ItemIdTour>) :
         val tvNameBookingTour: TextView = itemView.findViewById(R.id.tv_name_my_tour)
         val tvDatebookingTour: TextView = itemView.findViewById(R.id.tv_date_my_tour)
         val tvpriceBookingTour: TextView = itemView.findViewById(R.id.tv_price_my_tour)
+        val lo_item_my_tour: MaterialCardView = itemView.findViewById(R.id.lo_item_my_tour)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingTourViewHolder {
@@ -48,11 +51,11 @@ class ItemMyTour(private val mListBookingTour: MutableList<ItemIdTour>) :
     }
 
     override fun onBindViewHolder(holder: BookingTourViewHolder, position: Int) {
-        val bookingTour: ItemIdTour = mListBookingTour[position]
+        val myTour: BuyTour = mListBookingTour[position]
 
-        holder.tvTimeCurrentBookingTour.setText(mBaseCustom.convertLongToTime(bookingTour.createAt))
+        holder.tvTimeCurrentBookingTour.setText(mBaseCustom.convertLongToTime(myTour.createAt))
 
-        mTourService.getTourWithId(bookingTour.idTour).addOnCompleteListener {
+        mTourService.getTourWithId(myTour.idTour).addOnCompleteListener {
             if (it.isSuccessful) {
                 Picasso.get().load(it.result.get("avater").toString()).into(holder.imgBookingTour)
                 holder.tvNameBookingTour.setText(it.result.get("nameTour").toString())
@@ -68,6 +71,15 @@ class ItemMyTour(private val mListBookingTour: MutableList<ItemIdTour>) :
             }
         }
 
+        holder.lo_item_my_tour.setOnClickListener {
+            val intent: Intent = Intent(context, DetailMyTourActivity::class.java)
+            val bundle: Bundle = Bundle()
+
+            bundle.putSerializable("object_my_tour", myTour)
+
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
 
     }
 

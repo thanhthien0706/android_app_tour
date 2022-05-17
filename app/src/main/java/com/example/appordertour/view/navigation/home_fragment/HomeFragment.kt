@@ -3,7 +3,6 @@ package com.example.appordertour.view.navigation.home_fragment
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +30,7 @@ class HomeFragment : Fragment {
     private var listDataCategoryTour = mutableListOf<CategoryTour>()
     private lateinit var rcvCategory: RecyclerView
     private lateinit var rcvTopTour: RecyclerView
+    private lateinit var tv_name_home: TextView
     private lateinit var mTimer: Timer
 
     private val mFirebase = Firebase()
@@ -57,10 +57,27 @@ class HomeFragment : Fragment {
         vpg_slide_image = mView.findViewById(R.id.vpg_image_slide_home)
         rcvCategory = mView.findViewById(R.id.rcv_category_home)
         rcvTopTour = mView.findViewById(R.id.rcv_top_tour_home)
+        tv_name_home = mView.findViewById(R.id.tv_name_home)
 
         handlerSlideImage()
         handleCategory()
         handleTopTour()
+
+        if (mFirebase.checkLogin()) {
+            mFirebase.getUserData(mFirebase.getCurrentUser()?.uid.toString())
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        if (!it.result.isEmpty) {
+                            val dataUser = it.result.documents[0]
+                            tv_name_home.setText("Xin chào, ${dataUser.get("userName")}")
+                        } else {
+                            tv_name_home.setText("Chào mừng bạn đến với chúng tôi")
+                        }
+                    }
+                }
+        } else {
+            tv_name_home.setText("Chào mừng bạn đến với chúng tôi")
+        }
 
     }
 
@@ -110,6 +127,8 @@ class HomeFragment : Fragment {
         )
 
         vpg_slide_image.setPageTransformer(mCompositePageTransformer)
+
+
 
         mFirebase.getSlideImage().addOnCompleteListener { task ->
             if (task.isSuccessful) {

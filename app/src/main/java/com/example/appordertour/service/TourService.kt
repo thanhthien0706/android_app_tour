@@ -2,10 +2,7 @@ package com.example.appordertour.service
 
 import android.util.Log
 import android.widget.Toast
-import com.example.appordertour.model.ItemIdTour
-import com.example.appordertour.model.OrderTour
-import com.example.appordertour.model.Tour
-import com.example.appordertour.model.TouristStopover
+import com.example.appordertour.model.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -22,11 +19,11 @@ class TourService {
      */
 
     fun createTour(
-        dataTour: TouristStopover,
+        dataTour: Tour,
         callback: (status: Boolean) -> Unit
     ) {
 
-        db.collection("tour_service").add(dataTour).addOnCompleteListener { task ->
+        db.collection("tour").add(dataTour).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 callback.invoke(true)
             } else {
@@ -97,6 +94,51 @@ class TourService {
         return db.collection("category_tour").get()
     }
 
+    /**
+     * BUY TOUR
+     */
+
+    fun buyTour(dataBuyTour: BuyTour, callback: (status: Boolean) -> Unit) {
+        db.collection("buy_tour").add(dataBuyTour).addOnCompleteListener {
+            if (it.isSuccessful) {
+                callback.invoke(true)
+            } else {
+                callback.invoke(false)
+            }
+        }
+    }
+
+    fun getBuyTourWithId(idUser: String, callback: (listBuyTour: List<BuyTour>) -> Unit) {
+        db.collection("buy_tour").whereEqualTo("idUser", idUser).get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                var listData = mutableListOf<BuyTour>()
+                for (document in it.result.documents) {
+                    Log.d("kieTraDuLieu", document.get("idTour").toString())
+                    listData.add(
+                        BuyTour(
+                            document.id,
+                            document.get("idUser").toString(),
+                            document.get("idTour").toString(),
+                            document.get("statusPayment") as Boolean,
+                            document.get("createAt") as Long,
+                        )
+                    )
+                }
+
+                callback.invoke(listData)
+            }
+        }
+    }
+
+    fun removeBuyTour(idBuyTour: String, callback: (status: Boolean) -> Unit) {
+        db.collection("buy_tour").document(idBuyTour).delete().addOnCompleteListener {
+            if (it.isSuccessful) {
+                callback.invoke(true)
+            } else {
+                callback.invoke(false)
+            }
+        }
+    }
 
     /**
      * ADD ORDER TOUR
