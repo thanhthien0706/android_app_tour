@@ -36,6 +36,10 @@ class TourService {
      * GET TOUR
      */
 
+    fun getAllTour(): Task<QuerySnapshot> {
+        return db.collection("tour").get()
+    }
+
     fun getLimitTour(limit: Long = 4): Task<QuerySnapshot> {
         return db.collection("tour").limit(limit).orderBy("price").get()
     }

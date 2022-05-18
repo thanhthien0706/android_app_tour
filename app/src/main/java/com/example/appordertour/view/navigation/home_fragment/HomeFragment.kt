@@ -1,11 +1,13 @@
 package com.example.appordertour.view.navigation.home_fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +34,7 @@ class HomeFragment : Fragment {
     private lateinit var rcvTopTour: RecyclerView
     private lateinit var tv_name_home: TextView
     private lateinit var mTimer: Timer
+    private lateinit var btn_seen_all_tour: Button
 
     private val mFirebase = Firebase()
     private val mTourService = TourService()
@@ -51,6 +54,11 @@ class HomeFragment : Fragment {
     }
 
     private fun onEvents() {
+        btn_seen_all_tour.setOnClickListener {
+            startActivity(
+                Intent(activity, GetAllTourActivity::class.java)
+            )
+        }
     }
 
     private fun onControlers() {
@@ -58,6 +66,7 @@ class HomeFragment : Fragment {
         rcvCategory = mView.findViewById(R.id.rcv_category_home)
         rcvTopTour = mView.findViewById(R.id.rcv_top_tour_home)
         tv_name_home = mView.findViewById(R.id.tv_name_home)
+        btn_seen_all_tour = mView.findViewById(R.id.btn_seen_all_tour)
 
         handlerSlideImage()
         handleCategory()

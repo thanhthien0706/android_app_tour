@@ -26,7 +26,8 @@ class OverviewDetailTourFragment : Fragment() {
     private lateinit var tvCategoryDetail: TextView
     private lateinit var tvDateDetail: TextView
     private lateinit var tvAgeDetail: TextView
-//    private lateinit var btnBuyNow: Button
+
+    //    private lateinit var btnBuyNow: Button
     private lateinit var btnAddOrder: Button
 
     private val mFirebase = Firebase()
@@ -87,22 +88,26 @@ class OverviewDetailTourFragment : Fragment() {
 
     private fun handleAddOrderTour() {
 
-        mTourService.checkOrderTourExist(
-            ourInstance.arguments?.getString("idTour").toString(),
-            mFirebase.getCurrentUser()?.uid.toString()
-        ) { status ->
-            if (status) {
-                Toast.makeText(activity, "Bạn đã đặt tour này", Toast.LENGTH_LONG).show();
-            } else {
-                mTourService.createOrderTour(
-                    ourInstance.arguments?.getString("idTour").toString(),
-                    mFirebase.getCurrentUser()?.uid.toString()
-                ) { status ->
-                    if (status) {
-                        Toast.makeText(activity, "Đã thêm tour!", Toast.LENGTH_LONG).show();
+        if (mFirebase.checkLogin()) {
+            mTourService.checkOrderTourExist(
+                ourInstance.arguments?.getString("idTour").toString(),
+                mFirebase.getCurrentUser()?.uid.toString()
+            ) { status ->
+                if (status) {
+                    Toast.makeText(activity, "Bạn đã đặt tour này", Toast.LENGTH_LONG).show();
+                } else {
+                    mTourService.createOrderTour(
+                        ourInstance.arguments?.getString("idTour").toString(),
+                        mFirebase.getCurrentUser()?.uid.toString()
+                    ) { status ->
+                        if (status) {
+                            Toast.makeText(activity, "Đã thêm tour!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
+        } else {
+            startActivity(Intent(activity, LoginActivity::class.java))
         }
 
     }
