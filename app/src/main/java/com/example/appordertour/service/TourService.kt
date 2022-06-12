@@ -1,5 +1,6 @@
 package com.example.appordertour.service
 
+import android.R
 import android.util.Log
 import android.widget.Toast
 import com.example.appordertour.model.*
@@ -25,6 +26,20 @@ class TourService {
 
         db.collection("tour").add(dataTour).addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                callback.invoke(true)
+            } else {
+                callback.invoke(false)
+            }
+        }
+    }
+
+    /**
+     * DELETE TOUR
+     */
+
+    fun deleteTourWithId(idTour: String, callback: (status: Boolean) -> Unit) {
+        db.collection("tour").document(idTour).delete().addOnCompleteListener {
+            if (it.isSuccessful) {
                 callback.invoke(true)
             } else {
                 callback.invoke(false)

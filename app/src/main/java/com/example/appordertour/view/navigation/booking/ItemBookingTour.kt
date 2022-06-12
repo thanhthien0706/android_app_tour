@@ -55,9 +55,6 @@ class ItemBookingTour(private val mListBookingTour: MutableList<ItemIdTour>) :
 
         holder.tvTimeCurrentBookingTour.setText(mBaseCustom.convertLongToTime(bookingTour.createAt))
 
-        Log.d("tesdataMe", bookingTour.toString())
-
-
         mTourService.getTourWithId(bookingTour.idTour).addOnCompleteListener {
             if (it.isSuccessful) {
                 Picasso.get().load(it.result.get("avater").toString()).into(holder.imgBookingTour)
@@ -70,6 +67,7 @@ class ItemBookingTour(private val mListBookingTour: MutableList<ItemIdTour>) :
                         ).days.toString()
                     } ngày"
                 )
+//                Log.d("testDataNe", it.result.get("price").toString())
                 holder.tvpriceBookingTour.setText(mBaseCustom.convertLongtoCurrency(it.result.get("price") as Long?))
             }
         }

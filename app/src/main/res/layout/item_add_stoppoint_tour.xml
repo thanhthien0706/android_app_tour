@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_conner_16"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_blue_conner_16_tl_tr"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Nhập điểm dừng chân"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_name_stopponit"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollHorizontally="false"
+            android:theme="@style/LoginTextInputLayout_overlay">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_name_stopponit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tên"
+                android:textColor="@color/gray_mind" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_location_stopponit"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollHorizontally="false"
+            android:theme="@style/LoginTextInputLayout_overlay">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_location_stopponit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập địa điểm"
+                android:textColor="@color/gray_mind" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_description_stopponit"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollHorizontally="false"
+            android:theme="@style/LoginTextInputLayout_overlay">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_description_stopponit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập mô tả"
+                android:textColor="@color/gray_mind" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_time_stopponit"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollHorizontally="false"
+            android:theme="@style/LoginTextInputLayout_overlay">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_time_stopponit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập thời gian"
+                android:textColor="@color/gray_mind" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <Button xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cancelStoppoint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@color/gray_mind_70"
+                android:text="Hủy"
+                android:textSize="14sp"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/addStopponit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_weight="1"
+                android:background="@color/main_button"
+                android:text="Thêm"
+                android:textSize="14sp"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

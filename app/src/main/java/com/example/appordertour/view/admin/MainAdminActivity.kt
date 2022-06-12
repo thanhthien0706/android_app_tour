@@ -10,6 +10,7 @@ import com.example.appordertour.R
 import com.example.appordertour.service.Firebase
 import com.example.appordertour.view.MainStartActivity
 import com.example.appordertour.view.admin.chat_admin.ChatAdminActivity
+import com.example.appordertour.view.admin.tour.AdminTourActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -48,6 +49,12 @@ class MainAdminActivity : AppCompatActivity() {
         btn_chat_admin.setOnClickListener {
             startActivity(
                 Intent(this, ChatAdminActivity::class.java)
+            )
+        }
+
+        btn_tour_admin.setOnClickListener {
+            startActivity(
+                Intent(this, AdminTourActivity::class.java)
             )
         }
     }
