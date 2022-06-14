@@ -49,8 +49,44 @@ class TourService {
      * GET TOUR
      */
 
+    fun getTourWithSearch(
+        sub_string: MutableList<String>,
+        callback: (listTour: List<Tour>) -> Unit
+    ): Task<QuerySnapshot> {
+        return db.collection("tour").whereIn("location", sub_string).get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    var listTour = mutableListOf<Tour>()
+
+                    for (document in it.result) {
+
+                        listTour.add(
+                            Tour(
+                                id = document.id,
+                                status = document.get("status").toString(),
+                                nameTour = document.get("nameTour").toString(),
+                                location = document.get("location").toString(),
+                                categoryTour = document.get("categoryTour").toString(),
+                                price = document.get("price") as Long,
+                                startDate = document.get("startDate") as Long,
+                                endDate = document.get("endDate") as Long,
+                                adults = document.get("adults") as Long,
+                                avater = document.get("avater").toString(),
+                                isPrivate = document.get("isPrivate") as Boolean?,
+                                description = document.get("description").toString(),
+                                listImage = document.get("listImage") as List<String>,
+                                stoppoint = document.get("stoppoint") as List<TouristStopover>
+                            )
+                        )
+                    }
+
+                    callback.invoke(listTour)
+                }
+            }
+    }
+
     fun getAllTour(): Task<QuerySnapshot> {
-        return db.collection("tour").get()
+        return db.collection("tour").orderBy("price").get()
     }
 
     fun getLimitTour(limit: Long = 4): Task<QuerySnapshot> {

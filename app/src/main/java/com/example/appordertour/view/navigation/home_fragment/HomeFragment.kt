@@ -4,11 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +38,7 @@ class HomeFragment : Fragment {
     private lateinit var tv_name_home: TextView
     private lateinit var mTimer: Timer
     private lateinit var btn_seen_all_tour: Button
+    private lateinit var txt_search_home: EditText
 
     private val mFirebase = Firebase()
     private val mTourService = TourService()
@@ -59,6 +63,22 @@ class HomeFragment : Fragment {
                 Intent(activity, GetAllTourActivity::class.java)
             )
         }
+
+        txt_search_home.setOnKeyListener { view, i, keyEvent ->
+            if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                (i == KeyEvent.KEYCODE_ENTER)
+            ) {
+                val intent: Intent = Intent(context, TourWithSearchActivity::class.java)
+                val bundle: Bundle = Bundle()
+                bundle.putString("textSearch", txt_search_home.text.toString())
+
+                intent.putExtras(bundle)
+                context?.startActivity(intent)
+
+                return@setOnKeyListener true;
+            }
+            return@setOnKeyListener false;
+        }
     }
 
     private fun onControlers() {
@@ -67,6 +87,7 @@ class HomeFragment : Fragment {
         rcvTopTour = mView.findViewById(R.id.rcv_top_tour_home)
         tv_name_home = mView.findViewById(R.id.tv_name_home)
         btn_seen_all_tour = mView.findViewById(R.id.btn_seen_all_tour)
+        txt_search_home = mView.findViewById(R.id.txt_search_home)
 
         handlerSlideImage()
         handleCategory()

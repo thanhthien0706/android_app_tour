@@ -37,7 +37,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/luffy_5" />
+                android:src="@drawable/admin" />
 
             <TextView
                 android:id="@+id/tv_user_name_chat"

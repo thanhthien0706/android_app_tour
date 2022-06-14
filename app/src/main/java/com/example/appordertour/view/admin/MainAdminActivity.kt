@@ -11,6 +11,7 @@ import com.example.appordertour.service.Firebase
 import com.example.appordertour.view.MainStartActivity
 import com.example.appordertour.view.admin.chat_admin.ChatAdminActivity
 import com.example.appordertour.view.admin.tour.AdminTourActivity
+import com.example.appordertour.view.navigation.account.InformationAccountActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -20,8 +21,9 @@ class MainAdminActivity : AppCompatActivity() {
     private lateinit var btn_signout_admin: MaterialButton
     private lateinit var btn_chat_admin: MaterialCardView
     private lateinit var btn_tour_admin: MaterialCardView
-    private lateinit var btn_review_admin: MaterialCardView
-    private lateinit var btn_statistical_admin: MaterialCardView
+    private lateinit var btn_infor_admin: MaterialCardView
+//    private lateinit var btn_review_admin: MaterialCardView
+//    private lateinit var btn_statistical_admin: MaterialCardView
 
     private val mFirebase = Firebase()
 
@@ -57,6 +59,15 @@ class MainAdminActivity : AppCompatActivity() {
                 Intent(this, AdminTourActivity::class.java)
             )
         }
+
+        btn_infor_admin.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    InformationAccountActivity::class.java
+                )
+            )
+        }
     }
 
     private fun addControlls() {
@@ -64,6 +75,7 @@ class MainAdminActivity : AppCompatActivity() {
         btn_signout_admin = findViewById(R.id.btn_signout_admin)
         btn_chat_admin = findViewById(R.id.btn_chat_admin)
         btn_tour_admin = findViewById(R.id.btn_tour_admin)
+        btn_infor_admin = findViewById(R.id.btn_infor_admin)
 //        btn_review_admin = findViewById(R.id.btn_review_admin)
 //        btn_statistical_admin = findViewById(R.id.btn_statistical_admin)
 

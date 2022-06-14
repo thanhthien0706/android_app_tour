@@ -8,6 +8,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppOrderTour">
         <activity
+            android:name=".view.navigation.home_fragment.TourWithSearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.admin.tour.AdminEditTourActivity"
             android:exported="false" />
         <activity

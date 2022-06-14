@@ -216,6 +216,7 @@ class AdminEditTourActivity : AppCompatActivity() {
                                                         "Cập nhật thành công",
                                                         Toast.LENGTH_LONG
                                                     ).show()
+                                                    finish()
                                                 } else {
                                                     Toast.makeText(
                                                         this,
@@ -250,6 +251,7 @@ class AdminEditTourActivity : AppCompatActivity() {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_LONG)
                                     .show()
+                                finish()
                             } else {
                                 Toast.makeText(this, "Cập nhật không thành công", Toast.LENGTH_LONG)
                                     .show()
@@ -295,6 +297,7 @@ class AdminEditTourActivity : AppCompatActivity() {
                                                 "Cập nhật thành công",
                                                 Toast.LENGTH_LONG
                                             ).show()
+                                            finish()
                                         } else {
                                             Toast.makeText(
                                                 this,
@@ -327,6 +330,7 @@ class AdminEditTourActivity : AppCompatActivity() {
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_LONG).show()
+                        finish()
                     } else {
                         Toast.makeText(this, "Cập nhật không thành công", Toast.LENGTH_LONG).show()
                     }
