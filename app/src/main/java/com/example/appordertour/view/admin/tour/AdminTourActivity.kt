@@ -4,11 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.appordertour.R
 import com.example.appordertour.databinding.ActivityAdminTourBinding
 import com.example.appordertour.model.Tour
 import com.example.appordertour.model.TouristStopover

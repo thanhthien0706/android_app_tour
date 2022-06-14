@@ -1,8 +1,6 @@
 package com.example.appordertour.service
 
-import android.R
 import android.util.Log
-import android.widget.Toast
 import com.example.appordertour.model.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
@@ -132,7 +130,6 @@ class TourService {
             if (it.isSuccessful) {
                 var listData = mutableListOf<BuyTour>()
                 for (document in it.result.documents) {
-                    Log.d("kieTraDuLieu", document.get("idTour").toString())
                     listData.add(
                         BuyTour(
                             document.id,

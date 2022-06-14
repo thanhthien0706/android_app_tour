@@ -1,9 +1,7 @@
 package com.example.appordertour.service
 
 import android.net.Uri
-import android.util.Log
 import com.example.appordertour.model.User
-import com.example.appordertour.view.navigation.home_fragment.SlideImageItem
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -181,7 +179,7 @@ class Firebase {
         return db.collection("image_slide_location").get()
     }
 
-    fun uploadImage(collection: String, filImg: Uri): UploadTask {
+    fun uploadImage(collection: String, filImg: Uri?): UploadTask {
         if (filImg != null) {
             val ref = storageRef.child("/$collection/" + UUID.randomUUID())
             return ref.putFile(filImg)

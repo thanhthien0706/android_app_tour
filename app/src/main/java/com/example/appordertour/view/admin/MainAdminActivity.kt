@@ -64,8 +64,8 @@ class MainAdminActivity : AppCompatActivity() {
         btn_signout_admin = findViewById(R.id.btn_signout_admin)
         btn_chat_admin = findViewById(R.id.btn_chat_admin)
         btn_tour_admin = findViewById(R.id.btn_tour_admin)
-        btn_review_admin = findViewById(R.id.btn_review_admin)
-        btn_statistical_admin = findViewById(R.id.btn_statistical_admin)
+//        btn_review_admin = findViewById(R.id.btn_review_admin)
+//        btn_statistical_admin = findViewById(R.id.btn_statistical_admin)
 
         initData()
     }

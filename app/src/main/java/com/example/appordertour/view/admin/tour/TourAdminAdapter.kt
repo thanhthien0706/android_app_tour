@@ -1,5 +1,7 @@
 package com.example.appordertour.view.admin.tour
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +11,13 @@ import com.example.appordertour.R
 import com.example.appordertour.model.Tour
 import com.example.appordertour.service.TourService
 import com.example.appordertour.util.BaseCustom
+import com.example.appordertour.view.detail_tour.*
 import com.squareup.picasso.Picasso
+import java.util.ArrayList
 
 class TourAdminAdapter(private val mListTour: MutableList<Tour>) :
     RecyclerView.Adapter<TourAdminAdapter.TourAdminViewHolder>() {
+    private val baseCustom: BaseCustom = BaseCustom()
 
     private lateinit var context: android.content.Context
     private val mBaseCustom = BaseCustom()
@@ -44,18 +49,57 @@ class TourAdminAdapter(private val mListTour: MutableList<Tour>) :
         holder.tv_descripton_admin_tour.setText(tour.description)
         holder.tv_price_admin_tour.setText(mBaseCustom.convertLongtoCurrency(tour.price))
         holder.btn_popup_menu_admin_tour.setOnClickListener {
-            showPopupMenu(it, position, tour.id)
+            showPopupMenu(it, position, tour.id, tour)
+        }
+        holder.tv_name_admin_tour.setOnClickListener {
+            val intent: Intent = Intent(context, DetailTourActivity::class.java)
+            val bundle: Bundle = Bundle()
+            bundle.putSerializable("tour_student", tour)
+            bundle.putSerializable("descriptionTour", tour.description)
+            bundle.putSerializable(
+                "dateTour",
+                "${baseCustom.convertLongToTime(tour.startDate)} - ${
+                    baseCustom.convertLongToTime(tour.endDate)
+                }"
+            )
+            bundle.putString("ageTour", tour.adults.toString())
+            bundle.putStringArrayList("listImageTour", tour.listImage as ArrayList<String>?)
+            bundle.putString("idTour", tour.id)
+            bundle.putString("idCategorytour", tour.categoryTour)
+
+            val overviewDetailTourFragment = OverviewDetailTourFragment.newInstance()
+            overviewDetailTourFragment.arguments = bundle
+
+            val imageDetailTourFragment = ImageDetailTourFragment.newInstance()
+            imageDetailTourFragment.arguments = bundle
+
+            val activitiesDetailTourFragment = ActivitiesDetailTourFragment.newInstance()
+            activitiesDetailTourFragment.arguments = bundle
+
+            val commentDetailTourFragment = ReviewDetailTourFragment.newInstance()
+            commentDetailTourFragment.arguments = bundle
+
+            intent.putExtras(bundle)
+            context?.startActivity(intent)
         }
 
     }
 
-    private fun showPopupMenu(view: View, position: Int, idTour: String?) {
+    private fun showPopupMenu(view: View, position: Int, idTour: String?, tour: Tour) {
         val popupMenus = PopupMenu(context, view)
         popupMenus.inflate(R.menu.show_menu_handle)
         popupMenus.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.editBtn -> {
-                    Toast.makeText(context, "edit text", Toast.LENGTH_LONG).show()
+
+                    val intent: Intent = Intent(context, AdminEditTourActivity::class.java)
+                    val bundle: Bundle = Bundle()
+
+                    bundle.putSerializable("object_tour", tour)
+
+                    intent.putExtras(bundle)
+                    context.startActivity(intent)
+
                     true
                 }
                 R.id.deleteBtn -> {

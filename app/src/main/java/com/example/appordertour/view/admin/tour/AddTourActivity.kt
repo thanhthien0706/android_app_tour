@@ -22,11 +22,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appordertour.R
 import com.example.appordertour.databinding.ActivityAddTourBinding
-import com.example.appordertour.databinding.ActivityAdminTourBinding
 import com.example.appordertour.model.CategoryTour
+import com.example.appordertour.model.Tour
 import com.example.appordertour.model.TouristStopover
+import com.example.appordertour.service.Firebase
 import com.example.appordertour.service.TourService
-import com.example.appordertour.view.navigation.home_fragment.categoryAdapter
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
@@ -39,12 +39,16 @@ class AddTourActivity : AppCompatActivity() {
     val REQUEST_CODE: Int = 100
     val REQUEST_CODE_IMAGE_LIST_TOUR: Int = 200
     private val mTourService = TourService()
+    private val mFirebase = Firebase()
 
     private var filePath: Uri? = null
     private var listFilePathImageTour: MutableList<Uri> = mutableListOf()
     private lateinit var categoryTourId: String
     private lateinit var locationTour: String
     private var listStoppoint = mutableListOf<TouristStopover>()
+    private lateinit var statusTour: String
+    private var startDate: Long = 0
+    private var endDate: Long = 0
 
     val provinceList: ArrayList<String> = arrayListOf(
         "Hồ Chí Minh",
@@ -148,6 +152,79 @@ class AddTourActivity : AppCompatActivity() {
             onHandleShowDialog()
         }
 
+        binding.swPublicTourAdd.setOnCheckedChangeListener({ _, isChecked ->
+            if (isChecked) {
+                statusTour = "public"
+            } else {
+                statusTour = "private"
+            }
+        })
+
+        binding.btnSaveTourAdd.setOnClickListener {
+//            Log.d("testDuLie", binding.txtPriceTourAdd.text?.trim().toString())
+
+            mFirebase.uploadImage("image_tour", filePath).addOnSuccessListener {
+                it.storage.downloadUrl.addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val imageMaintour = it.result.toString()
+                        var listNewLinKImage = mutableListOf<String>()
+
+                        for (itemImage in listFilePathImageTour) {
+                            mFirebase.uploadImage("image_tour", itemImage).addOnSuccessListener {
+                                it.storage.downloadUrl.addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        listNewLinKImage.add(it.result.toString())
+                                        if (listNewLinKImage.size == listFilePathImageTour.size) {
+                                            mTourService.createTour(
+                                                Tour(
+                                                    status = statusTour,
+                                                    nameTour = binding.txtNameTourAdd.text?.trim()
+                                                        .toString(),
+                                                    location = locationTour,
+                                                    categoryTour = categoryTourId,
+                                                    price = binding.txtPriceTourAdd.text.toString()
+                                                        .toLong(),
+                                                    startDate = startDate,
+                                                    endDate = endDate,
+                                                    adults = binding.txtAdultsTourAdd.text.toString()
+                                                        .toLong(),
+                                                    avater = imageMaintour,
+                                                    description = binding.txtDescriptonTourAdd.text?.trim()
+                                                        .toString(),
+                                                    listImage = listNewLinKImage,
+                                                    stoppoint = listStoppoint
+                                                )
+                                            ) { status ->
+                                                if (status) {
+                                                    Toast.makeText(
+                                                        this,
+                                                        "Tạo tour thành công",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+
+                                                    finish()
+
+                                                } else {
+                                                    Toast.makeText(
+                                                        this,
+                                                        "Tạo tour thất bại",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+
     }
 
     private fun onHandleShowDialog() {
@@ -229,6 +306,7 @@ class AddTourActivity : AppCompatActivity() {
             datePicker.show(supportFragmentManager, "DATE_PICKER");
 
             datePicker.addOnPositiveButtonClickListener {
+                startDate = it
                 binding.txtStartDayTourAdd.setText(datePicker.headerText)
             }
         }
@@ -243,6 +321,7 @@ class AddTourActivity : AppCompatActivity() {
             datePicker.show(supportFragmentManager, "DATE_PICKER");
 
             datePicker.addOnPositiveButtonClickListener {
+                endDate = it
                 binding.txtEndDayTourAdd.setText(datePicker.headerText)
             }
         }
